@@ -3,6 +3,7 @@ package src;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,7 @@ public class Menu extends JFrame implements Dificultad, ActionListener{
 				 intermedio = new JRadioButton ("Intermedio"),
 				 avanzado = new JRadioButton ("Avanzado");
 	ButtonGroup bg = new ButtonGroup();
-	JLabel bienvenida = new JLabel ("Bienvenido"),
+	JLabel bienvenida = new JLabel ("Bienvenido a Buscaminas"),
 		   dificultad = new JLabel ("Seleccione la dificultad"),
 		   nom = new JLabel ("Nombre del jugador: ");
 	JButton confirmar = new JButton ("Jugar");
@@ -35,20 +36,46 @@ public class Menu extends JFrame implements Dificultad, ActionListener{
 		   menu = new JPanel (),
 		   grid2 = new JPanel ();
 	JTextField tf = new JTextField ();
+	Font f = new Font ("Comic Sans", Font.ITALIC, 16),
+			f2 = new Font ("Sans", Font.BOLD, 30);
 
 	
 	Menu (){
 		super ();
-		this.setBackground(Color.YELLOW);
+		bienvenida.setForeground(Color.WHITE);
+		bienvenida.setFont(f2);
+		bienvenida.setHorizontalAlignment(0);
+		nom.setForeground(Color.WHITE);
+		nom.setFont(f2);
+		nom.setHorizontalAlignment(0);
+		grid2.setBackground(Color.BLACK);
 		menu.setLayout(new BorderLayout());
 		menu.setPreferredSize(new Dimension (550,550));
 		grid.setLayout(new GridLayout(4,1));
 		grid2.setLayout(new GridLayout(3,1));
+		grid.setBackground(Color.BLACK);
 		tf.setText("");
+		tf.setMaximumSize((new Dimension (50,30)));
+		tf.setHorizontalAlignment(0);
 		grid2.add(bienvenida);
 		grid2.add(nom);
 		grid2.add(tf);
-		menu.add(grid2, BorderLayout.NORTH);		
+		menu.add(grid2, BorderLayout.NORTH);
+		principiante.setBackground(null);
+		intermedio.setBackground(null);
+		avanzado.setBackground(null);
+		principiante.setFont(f);
+		intermedio.setFont(f);
+		avanzado.setFont(f);
+		principiante.setForeground(Color.white);
+		intermedio.setForeground(Color.white);
+		avanzado.setForeground(Color.white);
+		principiante.setHorizontalAlignment(0); 
+		intermedio.setHorizontalAlignment(0); 
+		avanzado.setHorizontalAlignment(0); 
+		dificultad.setForeground(Color.WHITE);
+		dificultad.setFont(f2);
+		dificultad.setHorizontalAlignment(0);
 		
 		bg.add(principiante);
 		bg.add(intermedio);

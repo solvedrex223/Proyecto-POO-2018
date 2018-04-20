@@ -27,7 +27,8 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 	private static final long serialVersionUID = 1L;
 	Random r = new Random(System.currentTimeMillis());
 	Boton[][] botones;
-	JPanel grid = new JPanel();
+	JPanel grid = new JPanel(),
+			panel = new JPanel ();
 	JOptionPane op;
 	int bombas = 0, ganar, cont = 0;
 	Object[] opciones = { "Si", "No" };
@@ -43,10 +44,13 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 		hilo.start();
 		nombre.setText(c);
 		cronometro.setText("0.0");
-		nombre.setBackground(Color.BLACK);
-		this.setBackground(Color.BLACK);
+		cronometro.setFont(new Font ("Sans", Font.ITALIC, 20));
+		cronometro.setHorizontalAlignment(0);
+		cronometro.setBackground(null);
+		cronometro.setForeground(Color.WHITE);
 		nombre.setHorizontalAlignment(0);
 		nombre.setFont(new Font("Sans", Font.ITALIC, 30));
+		nombre.setForeground(Color.WHITE);
 		img[0] = new ImageIcon("tile_p.jpg");
 		img[1] = new ImageIcon("tile_i.jpg");
 		img[2] = new ImageIcon("tile_a.jpg");
@@ -96,7 +100,7 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 					botones[i][j].addMouseListener(this);
 					if (botones[i][j].bomba) {
 						bombas++;
-						botones[i][j].setText("b");
+						//botones[i][j].setText("b");
 					}
 				}
 			}
@@ -128,7 +132,7 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 					}
 					if (botones[i][j].bomba) {
 						bombas++;
-						botones[i][j].setText("b");
+						//botones[i][j].setText("b");
 					}
 					if (i + 1 == a && bombas < b) {
 						i = 0;
@@ -147,12 +151,14 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 				grid.add(botones[i][j]);
 			}
 		}
-		this.setLayout(new BorderLayout());
-		this.add(nombre, BorderLayout.NORTH);
-		this.add(cronometro, BorderLayout.SOUTH);
-		this.add(grid, BorderLayout.CENTER);
+		panel.setLayout(new BorderLayout());
+		panel.add(nombre, BorderLayout.NORTH);
+		panel.add(cronometro, BorderLayout.SOUTH);
+		panel.add(grid, BorderLayout.CENTER);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
+		panel.setBackground(Color.BLACK);
+		this.add(panel);
 		this.pack();
 	}
 
@@ -466,12 +472,12 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 			System.out.println("bug");
 			if (tiempo) {
 				cronometro.setText(String.valueOf((double)sw.getTime(TimeUnit.MILLISECONDS)/ 1000));
-				try {
-					Thread.sleep((long) 1.0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			}
+			try {
+				Thread.sleep((long) 1.0);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
