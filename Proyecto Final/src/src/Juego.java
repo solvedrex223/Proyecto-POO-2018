@@ -7,10 +7,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,6 +44,9 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 	boolean tiempo = false;
 	StopWatch sw = new StopWatch();
 	Thread hilo = new Thread(this);
+	File file;
+	AudioInputStream audio;
+	Clip clip;
 
 	Juego(int a, int b, int d, String c) throws IOException {
 		super();
@@ -60,6 +69,18 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 		img[6] = new ImageIcon("Mina_p.png");
 		img[7] = new ImageIcon("Mina_i.png");
 		op = new JOptionPane();
+		try {
+			file = new File ("Click2.wav");
+			audio = AudioSystem.getAudioInputStream(file);
+			clip = AudioSystem.getClip();
+			clip.open(audio);
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ganar = (a * a) - b;
 		grid.setLayout(new GridLayout(a, a));
 		grid.setBackground(Color.BLACK);
@@ -213,6 +234,7 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 								this.setVisible(false);
 								new Menu();
 								sw.stop();
+								clip.close();
 							} else {
 								System.exit(0);
 							}
@@ -220,6 +242,7 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 							// Pone el numero y el color en el boton dependiendo del numero de bombas que
 							// tiene cerca.
 							this.control(i, j);
+							clip.loop(1);
 							switch (this.loop(i, j)) {
 							case 1:
 								botones[i][j].setSelected(true);
@@ -469,7 +492,7 @@ public class Juego extends JFrame implements MouseListener, Runnable {
 	public void run() {
 
 		while (true) {
-			System.out.println("bug");
+			//System.out.println("bug");
 			if (tiempo) {
 				cronometro.setText(String.valueOf((double)sw.getTime(TimeUnit.MILLISECONDS)/ 1000));
 			}
